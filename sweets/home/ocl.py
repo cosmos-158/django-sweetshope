@@ -4,7 +4,7 @@ import pandas as pd
 def connect_to_db(s_name):
     config = {
     'user': 'root',
-    'password': 'Ashish@158',
+    'password': 'pwd',
     'host': 'localhost',
     'database': 'sweetsdb',
     'raise_on_warnings': True
