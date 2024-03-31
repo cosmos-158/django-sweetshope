@@ -4,7 +4,7 @@ import pandas as pd
 def insert_into_db(query):
     config = {
     'user': 'root',
-    'password': 'Ashish@158',
+    'password': 'enter password here',
     'host': 'localhost',
     'database': 'sweetsdb',
     'raise_on_warnings': True
