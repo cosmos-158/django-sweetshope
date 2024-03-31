@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+
+<style>
+  .popular-sweets{
+    text-align: center;
+  }
+
+  h5{
+    font-family: "Monotype Corsiva"
+  }
+
+  .lucknow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" >SweetHouse</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/order">Order Here</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search Sweets" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  {% comment %} carousel {% endcomment %}
+
+  <div class="container-sweet">
+    <div id="carouselExampleCaptions" class="carousel slide mx-0">
+        <div class="carousel-inner">
+          <div class="lucknow">
+            <h2 style="color: white">Welcome to Lucknow's SweetHouse</h2>
+          </div>
+          <div class="carousel-item active">
+            <img src="/static/img1.avif" alt="..." height="550px" width="100%">
+            <div class="carousel-caption d-none d-md-block">
+              <h3>Get Real Taste of Lucknow</h3>
+              <h5>utsah bhari subah yaha hasi shaam hoti hai <br>ye lucknow hai janab yaha bdi ajab si raat hoti hai</h4>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="/static/kachori.avif" alt="..." height="550px" width="100%">
+            <div class="carousel-caption d-none d-md-block">
+              <h3>.................Kachori Chai..............</h3>
+              <h5>..............</h4>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="/static/icecream.avif" alt="..." height="550px" width="100%" >
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Kuch Meetha ho Jaye</h4>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+  </div>
+
+  {% comment %} boxes {% endcomment %}
+  <div class="album py-1 bg-body-tertiary">
+    <div class="popular-sweets">
+      <h1 style="font-family: Monotype Corsiva">Most Popular Sweets</h1>
+    </div>
+    
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/kajuKatli.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Kaju Katli: 500Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <form method="post" action="/order">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Order Now</button>
+                  </form>
+                </div>
+                {% comment %} <small class="text-body-secondary">9 mins</small> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/besanLaddu.webp" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Besan Laddu: 300Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <form method="post" action="/order">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Order Now</button>
+                  </form>
+                </div>
+                {% comment %} <small class="text-body-secondary">9 mins</small> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/rasgulla.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Rasgulla: 350Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <form method="post" action="/order">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Order Now</button>
+                  </form>
+                </div>
+                {% comment %} <small class="text-body-secondary">9 mins</small> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/gulabjamun.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Gulabjamun: 400Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <form method="post" action="/order">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Order Now</button>
+                  </form>
+                </div>
+                {% comment %} <small class="text-body-secondary">9 mins</small> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/pistaBarfi.jpeg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Pista Barfi: 380Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <form method="post" action="/order">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Order Now</button>
+                  </form>
+                </div>
+                {% comment %} <small class="text-body-secondary">9 mins</small> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/kalaKand.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Kalakand: 250Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <form method="post" action="/order">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Order Now</button>
+                  </form>
+                </div>
+                {% comment %} <small class="text-body-secondary">9 mins</small> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} contact us {% endcomment %}
+  <div class="container-fluid">
+    <h3 class="my-2"> Download Our App</h3>
+    <style>
+      /* Flexbox container to display badges in the same row */
+      .badge-container {
+        display: flex;
+        justify-content: center; /* Align badges to the center horizontally */
+        align-items: center; /* Align badges to the center vertically */
+        flex-wrap: wrap; /* Allow wrapping for smaller screens */
+      }
+    
+      /* Set the dimensions for the badges */
+      .app-badge {
+        width: 200px; /* Set a fixed width */
+        height: auto; /* Maintain aspect ratio */
+        margin: 0 10px; /* Add margin between badges */
+      }
+    
+      /* Style for the text */
+      h3 {
+        font-size: 24px; /* Adjust the font size as needed */
+        text-align: center; /* Center the text horizontally */
+      }
+    </style>
+    <div class="badge-container">
+      <!-- Apple App Store Button -->
+        <img class="app-badge" src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store">
+    
+      <!-- Google Play Store Button -->
+      
+        <img class="app-badge" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+    </div>
+  </div>
+
+  <div class="container my-3">
+    <h3>Write Us</h3>
+    <form action="/user_detail" method='post'>
+      {% csrf_token %}
+      <label for="fname">First Name</label>
+      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+  
+      <label for="lname">Last Name</label>
+      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+      <label for="phno">Phone Number</label>
+      <br>
+      <input type="number" id="phno" name="phonenumber" placeholder="Your phone number..">
+      <br>
+      <br>
+      <label for="subject">Subject</label>
+      <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+  
+      <input type="submit" value="Submit">
+  
+    </form>
+
+    <style>
+      input[type=text], select, textarea {
+        width: 100%; /* Full width */
+        padding: 12px; /* Some padding */ 
+        border: 1px solid #ccc; /* Gray border */
+        border-radius: 4px; /* Rounded borders */
+        box-sizing: border-box; /* Make sure that padding and width stays in place */
+        margin-top: 6px; /* Add a top margin */
+        margin-bottom: 16px; /* Bottom margin */
+        resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+      }
+      
+      /* Style the submit button with a specific background color etc */
+      input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      /* When moving the mouse over the submit button, add a darker green color */
+      input[type=submit]:hover {
+        background-color: #45a049;
+      }
+      
+      /* Add a background color and some padding around the form */
+      .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+    </style>
+
+  </div>
+
+  {% endblock body %}

@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+{% block title %}Order{% endblock title %}
+
+{% block body %}
+
+<style>
+  .popular-sweets{
+    text-align: center;
+  }
+
+  .custom-button{
+    width:100px; 
+    height:25px; 
+    padding: 0px 0px; 
+    font-size:13px; 
+    background: black; 
+    border:None;
+    transition: background-color 0.3s ease:
+  }
+
+  .remove-button{
+    display: none;
+  }
+
+  .search-button{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .showbutton{
+    display: none;
+  }
+
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">SweetHouse</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/order">Order Here</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+ <form id = "TheForm", method="post", action="/showCart" target="TheWindow">
+    {% csrf_token %}
+    <input id="hiddenReportVar" type="hidden" name="cartItem"/>
+ </form>
+
+  <div class="album py-1 bg-body-tertiary">
+    <div class="container">
+      <div class = "search-button my-2">
+        <div style="width:300px;" class="innerdiv">
+          <form class="d-flex" role="search">
+            <input style="border: 1px solid black" id="searchInput" class="form-control me-2" type="search" placeholder="Search Sweets" aria-label="Search">
+          </form>
+        </div>
+        <div class="innerdiv">
+          <button id="sbmtbutton" class="btn btn-primary mx-2" type="submit" onclick="searchsweet()">Search</button>
+          <button id="showAll" class="btn btn-primary mx-2 showbutton" type="submit" onclick="showAll()">Show All</button>
+          <button id="buybutton" type="button" class="btn btn-primary position-relative" onclick="showCart()">
+            View Cart
+            <span id="cartTotal" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              0
+            </span>
+          </button>
+        </div>
+      </div>
+        
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 toBeSearched">
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/kajuKatli.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Kaju Katli: 500Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput1" class="form-control" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('kajuKatli', 'quantityInput1', 'totalOutput1')">
+                </form>
+                </div>
+                <small id = "totalOutput1" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add1" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add1', 'remove1', 'totalOutput1', 'kajuKatli', 'quantityInput1')">Add to Cart</button>
+              <button id="remove1" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add1', 'remove1', 'totalOutput1', 'quantityInput1', 'kajuKatli')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/besanLaddu.webp" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Besan Laddu: 300Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput2" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('besanladdu', 'quantityInput2', 'totalOutput2')">
+                  </form>
+                </div>
+                <small id = "totalOutput2" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add2" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add2', 'remove2', 'totalOutput2','besanladdu', 'quantityInput2')">Add to Cart</button>
+              <button id="remove2" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add2', 'remove2', 'totalOutput2', 'quantityInput2','besanladdu')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/rasgulla.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Rasgulla: 350Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput3" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('Rasgulla', 'quantityInput3', 'totalOutput3')">
+                  </form>
+                </div>
+                <small id = "totalOutput3" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add3" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add3', 'remove3', 'totalOutput3', 'Rasgulla','quantityInput3')">Add to Cart</button>
+              <button id="remove3" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add3', 'remove3', 'totalOutput3', 'quantityInput3', 'Rasgulla')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/gulabjamun.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Gulabjamun: 400Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput4" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('Gulabjamun', 'quantityInput4', 'totalOutput4')">
+                  </form>
+                </div>
+                <small id = "totalOutput4" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add4" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add4', 'remove4','totalOutput4','Gulabjamun', 'quantityInput4')">Add to Cart</button>
+              <button id="remove4" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add4', 'remove4', 'totalOutput4', 'quantityInput4','Gulabjamun')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/pistaBarfi.jpeg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Pista Barfi: 380Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput5" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('PistaBarfi', 'quantityInput5', 'totalOutput5')">
+                  </form>
+                </div>
+                <small id = "totalOutput5" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add5" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add5', 'remove5','totalOutput5',
+              'PistaBarfi', 'quantityInput5')">Add to Cart</button>
+              <button id="remove5" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add5', 'remove5', 'totalOutput5', 'quantityInput5','PistaBarfi')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/kalaKand.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Kalakand: 250Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput6" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('Kalakand', 'quantityInput6', 'totalOutput6')">
+                  </form>
+                </div>
+                <small id = "totalOutput6" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add6" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add6', 'remove6','totalOutput6','Kalakand', 'quantityInput6')">Add to Cart</button>
+              <button id="remove6" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add6', 'remove6', 'totalOutput6', 'quantityInput6','Kalakand')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/rasmalai.jpeg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Rasmalai: 480Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput7" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('Rasmalai', 'quantityInput7', 'totalOutput7')">
+                  </form>
+                </div>
+                <small id = "totalOutput7" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add7" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add7', 'remove7', 'totalOutput7' ,'Rasmalai', 'quantityInput7')">Add to Cart</button>
+              <button id="remove7" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add7', 'remove7', 'totalOutput7', 'quantityInput7','Rasmalai')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/peda.jpeg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Peda: 280Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput8" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('Peda', 'quantityInput8', 'totalOutput8')">
+                  </form>
+                </div>
+                <small id = "totalOutput8" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add8" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add8', 'remove8','Peda', 'totalOutput8', 'quantityInput8')">Add to Cart</button>
+              <button id="remove8" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add8', 'remove8', 'totalOutput8', 'quantityInput8','Peda')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/gujiya.webp" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Gujiya: 180Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput9" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('Gujiya', 'quantityInput9', 'totalOutput9')">
+                  </form>
+                </div>
+                <small id = "totalOutput9" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add9" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add9', 'remove9','totalOutput9', 'Gujiya', 'quantityInput9')">Add to Cart</button>
+              <button id="remove9" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add9', 'remove9', 'totalOutput9', 'quantityInput9','Gujiya')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/milkcake.webp" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Milkcake: 350Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput10" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('Milkcake', 'quantityInput10', 'totalOutput10')">
+                  </form>
+                </div>
+                <small id = "totalOutput10" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add10" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add10', 'remove10','totalOutput10','Milkcake', 'quantityInput10')">Add to Cart</button>
+              <button id="remove10" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add10', 'remove10', 'totalOutput10', 'quantityInput10','Milkcake')">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/static/boondiladdu.jpeg" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <div class="card-body">
+              <h4> Boondi Laddu: 285Rs/Kg</h4>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form class="d-flex" role="search">
+                  <input style="width:153px; height:25px; padding: 0px 14px; font-size: 12px" id="quantityInput11" class="form-control me-2" type="search" placeholder="Enter Quantity in Kgs" aria-label="Search" oninput="updateTotal('BoondiLaddu', 'quantityInput11', 'totalOutput11')">
+                  </form>
+                </div>
+                <small id = "totalOutput11" class="text-body-secondary">Total: 0 Rs</small>
+              </div>
+              <button id="add11" class="btn btn-primary my-2 custom-button" type="submit" onclick="handleClickadd('add11', 'remove11','totalOutput11','BoondiLaddu', 'quantityInput11')">Add to Cart</button>
+              <button id="remove11" class="btn btn-primary my-2 custom-button remove-button" type="submit" onclick="handleClickremove('add11', 'remove11', 'totalOutput11', 'quantityInput11','BoondiLaddu')">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var total = 0
+    var jsonData = {}
+    function updateTotal(sweetName, docid_1, docid_2){
+      var quantity = document.getElementById(docid_1).value;
+      fetch('/calculate_total?sweetName=' + encodeURIComponent(sweetName)+ '&quantity=' + quantity)
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById(docid_2).textContent = 'Total: ' + data.total +' Rs'
+      })
+      .catch(error => console.error('Error: ', error));
+    }
+
+    function handleClickadd(addb, removeb, totalval, sweetName, quantity){
+      document.getElementById(removeb).style.display = 'inline-block';
+      var quantity = document.getElementById(quantity).value;
+      var card_total = document.getElementById(totalval).textContent;
+      card_total = parseInt(card_total.match(/\d+/)[0]);
+      total = total + 1;
+      jsonData[sweetName] = [card_total,quantity]
+      console.log(jsonData)
+      document.getElementById('cartTotal').textContent = total;
+    }
+    function handleClickremove(addb, removeb, totalval, docid_1, sweetName){
+      document.getElementById(addb).textContent = 'Add to Cart';
+      document.getElementById(removeb).style.display = 'none';
+      var card_total = document.getElementById(totalval).textContent;
+      card_total = parseInt(card_total.match(/\d+/)[0]);
+      delete jsonData[sweetName]
+      total = total-1;
+      document.getElementById('cartTotal').textContent = total;
+      document.getElementById(docid_1).value = "";
+      document.getElementById(totalval).textContent = ""
+    }
+
+    function searchsweet(){
+      var searchinput = document.getElementById('searchInput');
+      var searchButton = document.getElementById('sbmtbutton');
+      var album_container = document.querySelectorAll('.toBeSearched');
+      var searchTerm = searchinput.value.toLowerCase();
+      album_container.forEach(function(toBeSearched){
+        var albums = toBeSearched.querySelectorAll('.col');
+        albums.forEach(function(album){
+          if(album.textContent.toLowerCase().includes(searchTerm)){
+            album.style.display = 'block';
+          }
+          else{
+            album.style.display = 'none';
+          }
+        });
+      });
+      document.getElementById('showAll').style.display = 'inline-block';
+    }
+
+    function showAll(){
+      var album_container = document.querySelectorAll('.toBeSearched');
+      album_container.forEach(function(toBeSearched){
+        var albums = toBeSearched.querySelectorAll('.col');
+        albums.forEach(function(album){
+          album.style.display = 'block';
+        });
+      });
+      document.getElementById('showAll').style.display = 'none';
+    }
+
+    function showCart(){
+      console.log(jsonData);
+      document.getElementById('hiddenReportVar').value=JSON.stringify(jsonData);
+      console.log(document.getElementById('hiddenReportVar').value);
+      var f = document.getElementById('TheForm');
+      f.submit();
+    }
+
+
+  </script>
+
+  {% endblock body %}
